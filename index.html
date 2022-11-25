@@ -8,26 +8,41 @@
 		function display(){
 			var save=document.getElementById("save").value
 			var pass=document.getElementById("pass").value
+			var model=document.getElementById("model").value
+			var gmale=document.getElementById("male").checked
+			var gfemale=document.getElementById("female").checked
+			console.log(gmale,gfemale)
+			if(gmale==true) var gender="male"
+				else var gender="female"
+				console.log(gender)	
 			console.log(save)
 			console.log(pass)
+			console.log(model)
 			document.getElementById("save").value=""
 			fetch("http://localhost:4000/newData",{
 			method:"POST",
 			headers:{
 				"Content-Type": "application/json"
 			},
-			body:JSON.stringify({name:save,age:pass})
+			body:JSON.stringify({name:save,age:pass,car:model,gender:gender})
 					})
+			.then((res)=>{
+				console.log(res)
+				if(res.status===200)
+					alert("Data Added")
+			})
+			.catch((err)=>{
+				alert(err)
+			})
 		}		
 	</script>
 	<style type="text/css">
 		body{
-			background-color: gray;
-			
+			background-color: gray;	
 		}
 		.design{
 			border: 1px solid ;
-			width: 25%;
+			width: 29%;
 			background-color: white;
 			margin-left: 32%;
 			margin-top: 20%;
@@ -36,17 +51,20 @@
 		#save{
 			padding: 2%;
 			background-color: burlywood;
-			margin-left: 20%;
+		
 		}
 		#pass{
-			padding: 2%;
+			padding: 1%;
 			background-color: burlywood;
-			margin-left: 20%;
+			
 		}
 		#style{
 			background-color:skyblue; 
-			padding:2%; 
-			margin-left: 35%;
+			padding:1%; 
+		
+		}
+		#model{
+			background-color: burlywood;
 		}
 	</style>
 </head>
@@ -57,6 +75,14 @@
 		<h1 style="color: red; margin-left: 20%;">LOGIN PAGE</h1>
 		<input id="save" type="text" placeholder="entername">
 	<p><input id="pass" type="password" placeholder="password"></p>
+	<p ><input id="male"  type="radio" name="gender" value="male">male</p>
+	<p><input id="female" type="radio" name="gender" value="female">female</p>
+	<p><select id="model">
+		<option>select a car</option>
+		<option>benz</option>
+		<option>rande rover</option>
+	</select></p>
+
 
 	<button id="style" onclick="display()">submit</button>
 	</div>
